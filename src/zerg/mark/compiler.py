@@ -3,23 +3,61 @@ import os
 
 import markdown
 from bs4 import BeautifulSoup
-import jinja2
 
-from .utils import logger, pathjoin, RECUR_DEEP
 from saika.utils import Paramscheck, Accept
+from zerg.settings import logger, RECUR_DEEP, jinja_env
+
+
+class Mark:
+    __slot__ = ['_filename', '_origin_content', '_html', '_soup']
+
+    def get(self, attr):
+        if attr in Mark.__slot__:
+            try:
+                value = self.__dict__[attr]
+            except KeyError:
+                value = None
+            return value
+        else:
+            raise KeyError(attr)
+
+    def set(self, key, value):
+        if key in Mark.__slot__:
+            self.__dict__[key] = value
+        else:
+            raise KeyError(key)
+
+    @classmethod
+    def from_origin(cls, origin):
+        mark = Mark()
+        mark.set('_origin_content', origin)
+        return mark
+
+    @classmethod
+    def from_fp(cls, fp):
+        mark = Mark()
+        mark.set('_origin_content', fp.read())
+        return mark
+
+    @classmethod
+    def from_fpath(cls, fpath, encoding='utf-8'):
+        basename = os.path.basename(fpath)
+        name = basename.split('.')[0]
+
+        with open(fpath, 'r', encoding=encoding) as f:
+            origin = f.read()
+        mark = Mark()
+        mark.set('_origin_content', origin)
+        mark.set('_filename', name)
+        return mark
 
 
 class MarkDown:
-    def __init__(self, text, title=None):
-        """
-        :param text: string
-            markup source text
-        :param title: string, default is None
-            if title is None, first h tag's string will replace with title
-        :return:
-        """
-        self._text = text
-        self._html = markdown.markdown(text)
+    def __init__(self, origin, title=None):
+
+        self._origin = origin
+        self._html = markdown.markdown(self._origin)
+
         self._soup = BeautifulSoup(self._html, 'html.parser')
         # assignment after do_analysis_hinfos()
         self._hinfos = list()
@@ -38,12 +76,12 @@ class MarkDown:
 
     @classmethod
     def from_source(cls, text):
-        return MarkDown(text=text)
+        return MarkDown(origin=text)
 
     @classmethod
     def from_fp(cls, fp):
         text = fp.read()
-        return MarkDown(text=text)
+        return MarkDown(origin=text)
 
     @classmethod
     def from_fpath(cls, fpath, encoding='utf-8'):
@@ -52,13 +90,11 @@ class MarkDown:
 
         with open(fpath, 'r', encoding=encoding) as f:
             text = f.read()
-        markup = MarkDown(text=text, title=name)
+        markup = MarkDown(origin=text, title=name)
         return markup
 
     def _generate(self, title, content, hinfos, is_draw_code):
-        loader = jinja2.FileSystemLoader(pathjoin('files'))
-        env = jinja2.Environment(loader=loader)
-        template = env.get_template('template.jinja2')
+        template = jinja_env.get_template('template.jinja2')
         return template.render(title=title, content=content, hinfos=hinfos, is_draw_code=is_draw_code)
 
     def generate(self):
@@ -142,8 +178,7 @@ class MarkDown:
         self.is_draw_code = True
 
         from pygments import highlight
-        from pygments.lexers import get_lexer_by_name, guess_lexer
-        from pygments.lexers.python import PythonLexer
+        from pygments.lexers import guess_lexer
         from pygments.formatters.html import HtmlFormatter
         from pygments.util import ClassNotFound
 
@@ -167,3 +202,7 @@ class MarkDown:
                 after_draw_code_content_tag = BeautifulSoup(after_draw_code_content, 'html.parser')
                 pre.replace_with(after_draw_code_content_tag)
                 logger.info('code block %s colored by %s' % (index, lexer.name))
+
+
+if __name__ == '__main__':
+    r = Mark()

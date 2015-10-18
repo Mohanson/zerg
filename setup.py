@@ -1,0 +1,29 @@
+# -*- coding: utf-8 -*-
+import os
+from setuptools import find_packages, setup
+
+
+def read(*rnames):
+    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+
+
+setup(
+    name='zerg',
+    version='0.0.1',
+    packages=find_packages('src'),
+    package_dir={'': 'src'},
+    include_package_data=True,
+    # entry_points={
+    # 'console_scripts': [
+    # 'saika=saika.scripts.manage:main',
+    # ]
+    # },
+    zip_safe=False,
+    url='https://github.com/Mohanson/zerg',
+    license='',
+    author='Mohanson',
+    author_email='mohanson@outlook.com',
+    description='zerg',
+    long_description=read('README.md'),
+    install_requires=['jinja2==2.8', 'saika==0.3.8'],
+)

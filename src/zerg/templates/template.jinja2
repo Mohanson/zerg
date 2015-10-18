@@ -10,15 +10,6 @@
         {% include "code.css" %}
     {% endif %}
     {% include "ext.css" %}
-    {% if hinfos %}
-    .content {
-        width: 80%;
-    }
-    {% else %}
-    .content {
-        width: 100%;
-    }
-    {% endif %}
 </style>
 <body>
 {% if hinfos %}
@@ -45,13 +36,20 @@
         {% endfor %}
     </ul>
     <div class="footer">
-        <a href="https://github.com/Mohanson/saika.mkdown" target="_blank">GitHub</a>
-        <a href="https://pypi.python.org/pypi/saika.mkdown" target="_blank">Pypi</a>
+        <a href="https://github.com/Mohanson/zerg" target="_blank">GitHub</a>
+        <a href="https://pypi.python.org/pypi/zerg" target="_blank">Pypi</a>
     </div>
 </div>
 {% endif %}
-<div class="content">
+
+{% if hinfos %}
+<div style="width: 80%;">
+{% else %}
+<div style="width: 100%;">
+{% endif %}
+
 {{ content }}
 </div>
+
 </body>
 </html>

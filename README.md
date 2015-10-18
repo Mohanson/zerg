@@ -1,15 +1,8 @@
-# Installition
+## Python Dev tools
 
-*This project build by zc.Buildout.*
+更好的 python 体验(Python3.5 支持, 纯净的/仅依赖 py 官方库)
 
-    on windows:
-        step 1. python bootstrap-buildout.py
-        step 2. /bin/buildout.exe
-        
-    on linux:
-        haven't test.
-        
-Usage:
-    
-    bin/zerg.exe --help
+## Installition
+
+    pip install saika
     

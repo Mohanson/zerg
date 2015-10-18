@@ -1,4 +1,11 @@
-* {
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>README</title>
+</head>
+<style>
+    * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box
@@ -104,7 +111,6 @@ h1 {
     border-bottom: 1px solid #EEEEEE;
     margin-top: 28px;
     margin-bottom: 14px;
-    /*font-weight: 600;*/
 }
 
 h2 {
@@ -187,3 +193,86 @@ pre code {
     background-color: transparent;
     border-radius: 0;
 }
+    
+    .list-unstyled {
+    list-style: outside none none;
+}
+
+.footer {
+    position: relative;
+    bottom: 5px;
+    width: 100%;
+    padding-left: 29px;
+}
+
+.footer a {
+    opacity: 0.3;
+}
+
+.sidebar {
+    padding-top: 20px;
+    width: 20%;
+    float: left;
+    background-color: #F5F5F5;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: fixed;
+    font-size: 15px;
+}
+
+.content {
+    float: right;
+    padding-left: 40px;
+    padding-right: 20px;
+    word-break: break-all;
+}
+
+.sidebar ul {
+    position: relative;
+    left: -10px;
+}
+
+.sidebar ul ul {
+    left: -20px;
+}
+
+.code-comments {
+    color: #808080;
+}
+
+.code-document-comments {
+    color: #629755;
+    font-style: italic;
+}
+
+.code-buildin {
+    color: #8888c6;
+}
+
+.code-parameter {
+    color: #aa4926;
+}
+</style>
+<body>
+
+
+
+<div style="width: 100%;">
+
+
+<h2>
+ Python Dev tools
+</h2>
+<p>
+ 更好的 python 体验(Python3.5 支持, 纯净的/仅依赖 py 官方库)
+</p>
+<h2>
+ Installition
+</h2>
+<pre><code>pip install saika
+</code></pre>
+</div>
+
+</body>
+</html>
