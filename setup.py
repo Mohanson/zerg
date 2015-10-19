@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 import os
+import codecs
+
 from setuptools import find_packages, setup
 
 
 def read(*rnames):
-    return open(os.path.join(os.path.dirname(__file__), *rnames)).read()
+    return codecs.open(os.path.join(os.path.dirname(__file__), *rnames), encoding='utf-8').read()
 
 
 setup(
