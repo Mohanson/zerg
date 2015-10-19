@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
-import os
-
-import markdown
-from bs4 import BeautifulSoup
 
 from saika.utils import Paramscheck, Accept
-from zerg.settings import logger, RECUR_DEEP, jinja_env
+
+from zerg.settings import RECUR_DEEP, jinja_env
+from zerg.mark.handlers import *
 
 
 class Mark:
-    __slot__ = ['_filename', '_origin_content', '_html', '_soup']
+    __slot__ = ['_filename', '_origin_content', '_html', '_soup', '_title', '_hinfos']
 
     def get(self, attr):
         if attr in Mark.__slot__:
@@ -27,29 +25,12 @@ class Mark:
         else:
             raise KeyError(key)
 
-    @classmethod
-    def from_origin(cls, origin):
-        mark = Mark()
-        mark.set('_origin_content', origin)
-        return mark
+    def as_dict(self):
+        return dict(zip(self.__slot__, map(self.get, self.__slot__)))
 
-    @classmethod
-    def from_fp(cls, fp):
-        mark = Mark()
-        mark.set('_origin_content', fp.read())
-        return mark
-
-    @classmethod
-    def from_fpath(cls, fpath, encoding='utf-8'):
-        basename = os.path.basename(fpath)
-        name = basename.split('.')[0]
-
-        with open(fpath, 'r', encoding=encoding) as f:
-            origin = f.read()
-        mark = Mark()
-        mark.set('_origin_content', origin)
-        mark.set('_filename', name)
-        return mark
+    def handle(self, handler):
+        handler.handle(self)
+        return self
 
 
 class MarkDown:
@@ -206,3 +187,8 @@ class MarkDown:
 
 if __name__ == '__main__':
     r = Mark()
+    r.handle(NewHandler.Fpath(r'C:\Users\Mohanson\PycharmProjects\zerg\README.md', 'utf-8'))
+    r.handle(InitHandler())
+    r.handle(TitleHandler())
+    r.handle(HtreeHandler())
+    r.handle(HtreeFormatHandler())
