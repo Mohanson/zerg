@@ -1,71 +1,45 @@
 # -*- coding: utf-8 -*-
 import os
 
-from bs4 import BeautifulSoup
-from markdown import markdown
-
 from zerg.settings import logger, jinja_env
 
 
-class Handler:
-    empty = object()
+class HandlerImp:
+    def __call__(self, *args, **kwargs):
+        raise NotImplementedError
 
 
-class NewHandler(Handler):
-    def __init__(self, content):
-        self.content = content
+class HandlerSetAuthor(HandlerImp):
+    def __init__(self, author):
+        self.author = author
 
-    def handle(self, mark):
-        mark.origin.content = self.content
-
-    class Fp(Handler):
-        def __init__(self, fp):
-            self.content = fp.read()
-
-        def handle(self, mark):
-            mark.origin.content = self.content
-
-    class Fpath(Handler):
-        def __init__(self, fpath, encoding='utf-8'):
-            self.fpath = os.path.abspath(fpath)
-
-            with open(fpath, 'r', encoding=encoding) as f:
-                self.content = f.read()
-
-        def handle(self, mark):
-            mark.origin.path = self.fpath
-            mark.origin.content = self.content
+    def __call__(self, document):
+        document.handler.author = self.author
 
 
-class InitHandler(Handler):
-    def handle(self, mark):
-        mark.process.soup = BeautifulSoup(markdown(mark.origin.content), 'html.parser')
-
-
-class TitleHandler(Handler):
-    def __init__(self, title=None):
+class HandlerSetTitle(HandlerImp):
+    def __init__(self, title=''):
         self.title = title
 
-    def handle(self, mark):
+    def __call__(self, document):
         if self.title:
-            mark.process.title = self.title
-            return
-        if mark.origin.path:
-            name = os.path.basename(mark.origin.path).split('.')[0]
-            mark.process.title = name
-            return
-        first_h = mark.get('_soup').find(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
-        if first_h:
-            mark.process.title = str(first_h.string)
-            return
-        first_p = mark.get('_soup').find('p')
-        if first_p:
-            mark.process.title = str(first_p.string[0: 10])
-            return
-        mark.process.title = 'Mark By Zerg'
+            document.handler.title = self.title if self.title else str()
+        elif document.origin.fpath:
+            name = os.path.basename(document.origin.fpath).split('.')[0]
+            document.handler.title = name
+        else:
+            htag = document.soup.find(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+            if htag:
+                document.handler.title = str(htag.string)
+            else:
+                ptag = document.soup.find('p')
+                if ptag:
+                    document.handler.title = str(ptag.string)[0:10]
+                else:
+                    document.handler.title = 'zerg document'
 
 
-class HtreeHandler(Handler):
+class HtreeHandler(HandlerImp):
     def __init__(self, rdeep=3):
         self.rdeep = rdeep
         self.hinfos = []
@@ -92,7 +66,7 @@ class HtreeHandler(Handler):
             deep += 1
             self.insert_into_hinfos(branch, h)
 
-    def handle(self, mark):
+    def __call__(self, mark):
         logger.info('start run HtreeHandler for %s' % mark.process.title)
         for index, h in enumerate(mark.process.soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])):
             hinfo = self.insert_into_hinfos(self.hinfos, h)
@@ -101,7 +75,7 @@ class HtreeHandler(Handler):
         mark.process.hinfos = self.hinfos
 
 
-class HtreeFormatHandler(Handler):
+class HtreeFormatHandler(HandlerImp):
     @staticmethod
     def format_hinfos(branch):
         for i in branch:
@@ -127,8 +101,8 @@ class HtreeFormatHandler(Handler):
         mark.process.hinfos = HtreeFormatHandler.format_hinfos(mark.process.hinfos)
 
 
-class GenerateHandler(Handler):
-    class Fp(Handler):
+class GenerateHandler(HandlerImp):
+    class Fp(HandlerImp):
         def __init__(self, fp):
             self.fp = fp
 
@@ -137,7 +111,7 @@ class GenerateHandler(Handler):
             html = template.render(mark=mark)
             self.fp.write(html)
 
-    class Fpath(Handler):
+    class Fpath(HandlerImp):
         def __init__(self, fpath, encoding='utf-8'):
             self.fpath = fpath
             self.encoding = encoding
@@ -147,3 +121,8 @@ class GenerateHandler(Handler):
             html = template.render(mark=mark)
             with open(self.fpath, 'w', encoding=self.encoding) as f:
                 f.write(html)
+
+
+class Handler:
+    SetAuthor = HandlerSetAuthor
+    SetTitle = HandlerSetTitle

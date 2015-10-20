@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>{{ mark.process.title }}</title>
+</head>
+<style>
+    {% include "common.css" %}
+    {% if mark.result.drawing %}
+        {% include "code.css" %}
+    {% endif %}
+    {% include "ext.css" %}
+</style>
+<body>
+{% if mark.process.hinfos %}
+<div class="sidebar">
+    <ul class="list-unstyled">
+        {% for hinfo in mark.process.hinfos %}
+        <li><a href={{ '#' + hinfo['id'] }}>{{ hinfo['id'] + ' ' + hinfo['string'] }}</a>
+            {% if hinfo['children'] %}
+            <ul class="list-unstyled">
+                {% for hinfo in hinfo['children'] %}
+                <li><a href={{ '#' + hinfo['id'] }}>{{ hinfo['id'] + ' ' + hinfo['string'] }}</a>
+                {% if hinfo['children'] %}
+                    <ul class="list-unstyled">
+                    {% for hinfo in hinfo['children'] %}
+                    <li><a href={{ '#' + hinfo['id'] }}>{{ hinfo['id'] + ' ' + hinfo['string'] }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    <div class="footer">
+        <a href="https://github.com/Mohanson/zerg" target="_blank">GitHub</a>
+        <a href="https://pypi.python.org/pypi/zerg" target="_blank">Pypi</a>
+    </div>
+</div>
+{% endif %}
+
+{% if mark.process.hinfos %}
+<div style="width: 80%;" class="content">
+{% else %}
+<div style="width: 100%;" class="content">
+{% endif %}
+{{ mark.html }}
+</div>
+
+</body>
+</html>

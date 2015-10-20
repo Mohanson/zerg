@@ -27,5 +27,5 @@ setup(
     author_email='mohanson@outlook.com',
     description='zerg',
     long_description=read('README.md'),
-    install_requires=['jinja2==2.8', 'saika==0.3.8', 'markdown'],
+    install_requires=['jinja2==2.8', 'saika==0.3.8', 'Markdown==2.6.2', 'ndict.py==1.0.2'],
 )
