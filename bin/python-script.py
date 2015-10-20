@@ -4,6 +4,7 @@ import sys
 
 sys.path[0:0] = [
   'c:\\users\\mohanson\\pycharmprojects\\zerg\\src',
+  'c:\\users\\mohanson\\pycharmprojects\\zerg\\eggs\\markdown-2.6.2-py3.5.egg',
   'c:\\users\\mohanson\\pycharmprojects\\zerg\\eggs\\saika-0.3.8-py3.5.egg',
   'c:\\users\\mohanson\\pycharmprojects\\zerg\\eggs\\jinja2-2.8-py3.5.egg',
   'c:\\users\\mohanson\\pycharmprojects\\zerg\\eggs\\markupsafe-0.23-py3.5.egg',

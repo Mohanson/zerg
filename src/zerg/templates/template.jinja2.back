@@ -2,20 +2,20 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>{{ mark.process.title }}</title>
+    <title>{{ title }}</title>
 </head>
 <style>
     {% include "common.css" %}
-    {% if mark.result.drawing %}
+    {% if is_draw_code %}
         {% include "code.css" %}
     {% endif %}
     {% include "ext.css" %}
 </style>
 <body>
-{% if mark.process.hinfos %}
+{% if hinfos %}
 <div class="sidebar">
     <ul class="list-unstyled">
-        {% for hinfo in mark.process.hinfos %}
+        {% for hinfo in hinfos %}
         <li><a href={{ '#' + hinfo['id'] }}>{{ hinfo['id'] + ' ' + hinfo['string'] }}</a>
             {% if hinfo['children'] %}
             <ul class="list-unstyled">
@@ -42,12 +42,13 @@
 </div>
 {% endif %}
 
-{% if mark.process.hinfos %}
-<div style="width: 80%;" class="content">
+{% if hinfos %}
+<div style="width: 80%;">
 {% else %}
-<div style="width: 100%;" class="content">
+<div style="width: 100%;">
 {% endif %}
-{{ mark.html }}
+
+{{ content }}
 </div>
 
 </body>

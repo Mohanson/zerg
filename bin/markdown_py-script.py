@@ -41,6 +41,7 @@ sys.path[0:0] = [
   'c:\\users\\mohanson\\pycharmprojects\\zerg\\eggs\\beautifulsoup4-4.4.0-py3.5.egg',
   'c:\\users\\mohanson\\pycharmprojects\\zerg\\eggs\\pygments-2.0.2-py3.5.egg',
   'c:\\users\\mohanson\\pycharmprojects\\zerg\\eggs\\saika-0.3.8-py3.5.egg',
+  'c:\\users\\mohanson\\pycharmprojects\\zerg\\eggs\\ndict.py-1.0.1-py3.5.egg',
   'c:\\users\\mohanson\\pycharmprojects\\zerg\\eggs\\markupsafe-0.23-py3.5.egg',
   ]
 
