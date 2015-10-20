@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from saika.utils import ndict
+from ndict import ndict
 
 from zerg.mark.handlers import *
 
