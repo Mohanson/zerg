@@ -19,7 +19,8 @@ class Document:
 
         self.handler = ndict(
             author=str(),
-            title=str()
+            title=str(),
+            hnodes=None
         )
 
     @property
@@ -58,5 +59,6 @@ if __name__ == '__main__':
     document = DocumentFpath(r'C:\Users\Mohanson\PycharmProjects\zerg\README.md')
     document.execute(Handler.SetAuthor('Mohanson'))
     document.execute(Handler.SetTitle())
-
+    document.execute(Handler.SetDirectory())
+    print(document.soup)
     document.generate_fpath(r'C:\Users\Mohanson\PycharmProjects\zerg\README.html')

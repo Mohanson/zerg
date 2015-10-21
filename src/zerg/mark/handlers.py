@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 
-from zerg.settings import logger, jinja_env
+from zerg.settings import logger
 
 
 class HandlerImp:
@@ -39,90 +39,72 @@ class HandlerSetTitle(HandlerImp):
                     document.handler.title = 'zerg document'
 
 
-class HtreeHandler(HandlerImp):
-    def __init__(self, rdeep=3):
-        self.rdeep = rdeep
-        self.hinfos = []
+class _HNode:
+    def __init__(self, name, string):
+        self.name = name
+        self.string = string
 
-    def insert_into_hinfos(self, branch, h):
-        deep, ids = 1, []
-        hinfo = {
-            'name': str(h.name),
-            'string': str(h.string),
-            'children': [],
-            'id': None,
-            'deep': None
-        }
-        if not (branch and hinfo['name'] > branch[-1]['name'] and deep < self.rdeep):
-            ids.append(len(branch) + 1)
-            hinfo['id'] = '.'.join([str(i) for i in ids])
-            hinfo['deep'] = deep
-            branch.append(hinfo)
-            logger.info('|    ' * (deep - 1) + hinfo['id'] + ' ' + hinfo['string'])
-            return hinfo
+        self.children = []
+
+        self.parent = None
+        self.ids = []
+
+    @property
+    def deep(self):
+        return len(self.ids)
+
+    @property
+    def id(self):
+        return '.'.join(list(map(str, self.ids))) or None
+
+    def __str__(self):
+        return '_HNode<id=%s, name=%s, string=%s, deep=%s, children=%s>' % (
+            self.id, self.name, self.string, self.deep, self.children,
+        )
+
+    def __repr__(self):
+        return self.__str__()
+
+    def show(self):
+        for node in self.children:
+            logger.info('|    ' * (node.deep - 1) + node.id + ' ' + node.string)
+            node.show()
+
+    def insert(self, hnode):
+        if not self.children or hnode.deep >= 2:
+            hnode.parent = self
+            hnode.ids.append(len(self.children) + 1)
+            self.children.append(hnode)
         else:
-            ids.append(len(branch))
-            branch = branch[-1]['children']
-            deep += 1
-            self.insert_into_hinfos(branch, h)
-
-    def __call__(self, mark):
-        logger.info('start run HtreeHandler for %s' % mark.process.title)
-        for index, h in enumerate(mark.process.soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])):
-            hinfo = self.insert_into_hinfos(self.hinfos, h)
-            h['id'] = hinfo['id']
-
-        mark.process.hinfos = self.hinfos
+            if self.children[-1].name >= hnode.name:
+                hnode.parent = self
+                hnode.ids.append(len(self.children) + 1)
+                self.children.append(hnode)
+            else:
+                hnode.ids.append(len(self.children))
+                self.children[-1].insert(hnode)
+        return hnode
 
 
-class HtreeFormatHandler(HandlerImp):
-    @staticmethod
-    def format_hinfos(branch):
-        for i in branch:
-            i['name'] = {
-                1: 'h1',
-                2: 'h2',
-                3: 'h3',
-                4: 'h4',
-                5: 'h5',
-                6: 'h6'
-            }.get(i['id'].count('.') + 1)
-            if i['children']:
-                i['children'] = HtreeFormatHandler.format_hinfos(i['children'])
-        return branch
+class HandlerSetDirectory(HandlerImp):
+    def __init__(self, format=True):
+        self.format = format
 
-    def handle(self, mark):
-        for index, h in enumerate(mark.process.soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])):
-            _name = {1: 'h1',
-                     2: 'h2',
-                     3: 'h3'}.get(h['id'].count('.') + 1)
-            h.name = _name
-
-        mark.process.hinfos = HtreeFormatHandler.format_hinfos(mark.process.hinfos)
-
-
-class GenerateHandler(HandlerImp):
-    class Fp(HandlerImp):
-        def __init__(self, fp):
-            self.fp = fp
-
-        def handle(self, mark):
-            template = jinja_env.get_template('template.jinja2')
-            html = template.render(mark=mark)
-            self.fp.write(html)
-
-    class Fpath(HandlerImp):
-        def __init__(self, fpath, encoding='utf-8'):
-            self.fpath = fpath
-            self.encoding = encoding
-
-        def handle(self, mark):
-            template = jinja_env.get_template('template.jinja2')
-            html = template.render(mark=mark)
-            with open(self.fpath, 'w', encoding=self.encoding) as f:
-                f.write(html)
+    def __call__(self, document):
+        root = _HNode(None, None)
+        for index, h in enumerate(document.soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])):
+            hnode = root.insert(_HNode(str(h.name), str(h.string)))
+            if self.format:
+                h.name = {
+                    1: 'h1',
+                    2: 'h2',
+                    3: 'h3'
+                }.get(hnode.deep)
+        root.show()
+        document.handler.hnodes = root
 
 
 class Handler:
     SetAuthor = HandlerSetAuthor
     SetTitle = HandlerSetTitle
+    SetDirectory = HandlerSetDirectory

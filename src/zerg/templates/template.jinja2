@@ -3,8 +3,51 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>{{ document.handler.title }}{% if document.handler.author %} ({{ document.handler.author }}){% endif %}</title>
+    <style>
+        {% include "default.css" %}
+        {% include "ext.css" %}
+    </style>
 </head>
 <body>
-{{ document.html }}
+    {# sidebar with document's hnodes #}
+    {% if document.handler.hnodes %}
+    <div class="sidebar">
+        <ul class="list-unstyled">
+            {% for hnode in document.handler.hnodes.children %}
+            <li><a href={{ '#' + hnode.id }}>{{ hnode.id + ' ' + hnode.string }}</a>
+                {% if hnode.children %}
+                <ul class="list-unstyled">
+                    {% for hinfo in hnode.children %}
+                    <li><a href={{ '#' + hnode.id }}>{{ hnode.id + ' ' + hnode.string }}</a>
+                    {% if hinfo.children %}
+                        <ul class="list-unstyled">
+                        {% for hinfo in hinfo.children %}
+                        <li><a href={{ '#' + hnode.id }}>{{ hnode.id + ' ' + hnode.string }}</a></li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+        <div class="footer">
+            <a href="https://github.com/Mohanson/zerg" target="_blank">GitHub</a>
+            <a href="https://pypi.python.org/pypi/zerg" target="_blank">Pypi</a>
+        </div>
+    </div>
+    {% endif %}
+
+
+    {% if document.handler.hnodes %}
+    <div style="width: 80%;" class="content">
+    {% else %}
+    <div style="width: 100%;" class="content">
+    {% endif %}
+    {# document's markdown html #}
+    {{ document.html }}
+    </div>
 </body>
 </html>
