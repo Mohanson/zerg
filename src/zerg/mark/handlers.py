@@ -94,6 +94,7 @@ class HandlerSetDirectory(HandlerImp):
         root = _HNode(None, None)
         for index, h in enumerate(document.soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])):
             hnode = root.insert(_HNode(str(h.name), str(h.string)))
+            h['id'] = hnode.id
             if self.format:
                 h.name = {
                     1: 'h1',
