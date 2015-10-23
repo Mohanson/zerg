@@ -3,7 +3,7 @@ def execute_draw_codes(self, lexical=None, linenos=False):
         self.is_draw_code = True
 
         from pygments import highlight
-        from pygments.lexers import guess_lexer
+        from pygments.lexers import guess_lexer, get_lexer_by_name
         from pygments.formatters.html import HtmlFormatter
         from pygments.util import ClassNotFound
 
