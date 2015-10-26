@@ -1,9 +1,11 @@
 ## Scan
 
-Just trans .md to .html
+Just another markdown compiler.
 ![show.png](/resources/show.png)
 
 ## Installition
+
+The project was built by *buildout*. All you need to do the following things:
 
     python bootstrap-buildout.py
     cd bin
