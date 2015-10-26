@@ -1,6 +1,6 @@
 ## Scan
 
-Trans .md to .html
+trans .md to .html
 
 ## Installition
 
@@ -9,7 +9,13 @@ Trans .md to .html
     ./buildout
     
 ## Usage
-    from zerg import document
+
+    cd bin
+    zerg /home/user/README.md --author=Mohanson
+    
+## Or Use by Source Code
+
+    from zerg.mark import DocumentFpath, Handler
     
     document = DocumentFpath(r'C:\Users\Mohanson\PycharmProjects\zerg\README.md')
     document.execute(Handler.SetAuthor('Mohanson'))
@@ -18,3 +24,8 @@ Trans .md to .html
     document.execute(Handler.DrawCode())
     print(document.soup)
     document.generate_fpath(r'C:\Users\Mohanson\PycharmProjects\zerg\README.html')
+    
+## How Connect me
+    
+    mailto: mohanson@outlook.com
+    
