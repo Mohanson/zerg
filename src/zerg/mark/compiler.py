@@ -60,5 +60,5 @@ if __name__ == '__main__':
     document.execute(Handler.SetAuthor('Mohanson'))
     document.execute(Handler.SetTitle())
     document.execute(Handler.SetDirectory())
-    print(document.soup)
+    document.execute(Handler.DrawCode())
     document.generate_fpath(r'C:\Users\Mohanson\PycharmProjects\zerg\README.html')

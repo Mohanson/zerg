@@ -1,6 +1,12 @@
 # -*- coding: utf-8 -*-
 import os
 
+from bs4 import BeautifulSoup
+from pygments import highlight
+from pygments.lexers import guess_lexer
+from pygments.formatters.html import HtmlFormatter
+from pygments.util import ClassNotFound
+
 from zerg.settings import logger
 
 
@@ -105,7 +111,27 @@ class HandlerSetDirectory(HandlerImp):
         document.handler.hnodes = root
 
 
+class HandlerDrawCode(HandlerImp):
+    def __init__(self, syntax=None, linenos=False):
+        self.sybtax = syntax
+        self.linenos = linenos
+
+    def __call__(self, document):
+        for index, pre in enumerate(document.soup.select('pre')):
+            context = str(pre.string)
+            try:
+                lexer = guess_lexer(context)
+            except ClassNotFound:
+                logger.info('code block %s colored by %s' % (index, 'Normal String'))
+            else:
+                context_drawed = highlight(context, lexer, HtmlFormatter(linenos=self.linenos, cssclass='source'))
+                context_soup = BeautifulSoup(context_drawed, 'html.parser')
+                pre.replace_with(context_soup)
+                logger.info('code block %s colored by %s' % (index, lexer.name))
+
+
 class Handler:
     SetAuthor = HandlerSetAuthor
     SetTitle = HandlerSetTitle
     SetDirectory = HandlerSetDirectory
+    DrawCode = HandlerDrawCode
