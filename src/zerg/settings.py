@@ -2,24 +2,11 @@
 
 import logging
 import sys
-import os
+import pathlib
 
 import jinja2
 
-
-DEGUB = True
-RECUR_DEEP = 3
-
-
-class DIR:
-    def __init__(self, path):
-        self.path = path
-
-    def join(self, *args):
-        return DIR(os.path.join(self.path, *args))
-
-
-project = DIR(os.path.dirname(__file__))
+project = pathlib.Path(__file__).parent
 
 logger = logging.getLogger('zerg')
 logger.setLevel(logging.DEBUG)
@@ -30,7 +17,7 @@ stream_handler.setFormatter(formatter)
 
 logger.addHandler(stream_handler)
 
-loader = jinja2.FileSystemLoader(project.join('templates').path)
+loader = jinja2.FileSystemLoader(project.joinpath('templates').__str__())
 jinja_env = jinja2.Environment(loader=loader)
 
-__all__ = ['DEBUG', 'RECUR_DEEP', 'project', 'logger', 'jinja_env']
+__all__ = ['project', 'logger', 'jinja_env']
