@@ -26,7 +26,7 @@ Just trans .md to .html
     print(document.soup)
     document.generate_fpath(r'C:\Users\Mohanson\PycharmProjects\zerg\README.html')
     
-## How Connect me
-    
+## How to contact me
+
     mailto: mohanson@outlook.com
     
