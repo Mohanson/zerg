@@ -30,5 +30,5 @@ The project was built by *buildout*. All you need to do the following things:
     
 ## How to contact me
 
-    mailto: mohanson@outlook.com
+mailto: mohanson@outlook.com
     

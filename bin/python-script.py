@@ -1,4 +1,4 @@
-#!"C:\Users\Mohanson\AppData\Local\Programs\Python\Python35-32\python.exe"
+#!"C:\Users\Mohanson\AppData\Local\Programs\Python\Python35\python.exe"
 
 import sys
 

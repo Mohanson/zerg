@@ -24,12 +24,12 @@ class HandlerSetAuthor(HandlerImp):
 
 
 class HandlerSetTitle(HandlerImp):
-    def __init__(self, title=''):
-        self.title = title
+    def __init__(self, caption=None):
+        self.caption = caption
 
     def __call__(self, document):
-        if self.title:
-            document.handler.title = self.title if self.title else str()
+        if self.caption:
+            document.handler.title = self.caption if self.caption else str()
         elif document.origin.fpath:
             name = os.path.basename(document.origin.fpath).split('.')[0]
             document.handler.title = name
