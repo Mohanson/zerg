@@ -134,7 +134,7 @@ ul ul, ol ul, ul ol, ol ol {
 }
 
 li {
-    line-height: 27px;
+    line-height: 25px;
 }
 
 li a {
@@ -196,18 +196,7 @@ pre code {
     list-style: outside none none;
 }
 
-.footer {
-    position: relative;
-    bottom: 5px;
-    width: 100%;
-    padding-left: 29px;
-}
-
-.footer a {
-    opacity: 0.3;
-}
-
-.sidebar {
+.zerg-side-ul {
     padding-top: 20px;
     width: 20%;
     float: left;
@@ -216,84 +205,149 @@ pre code {
     overflow-x: hidden;
     overflow-y: auto;
     position: fixed;
-    font-size: 15px;
+    font-size: 13px;
 }
 
-.content {
+.zerg-side-ul ul li ul li {
+    line-height: 20px;
+}
+
+.zerg-side-ul > ul > li {
+    margin-top: 0.5em;
+}
+
+.zerg-side-ul > ul > li > a {
+    color: #2C3E50;
+    font-size: 17px;
+}
+
+.zerg-content {
     float: right;
     padding-left: 40px;
     padding-right: 20px;
     word-break: break-all;
 }
+        
+            .source .hll { background-color: #ffffcc }
+.source  { background: #f8f8f8; }
+.source .c { color: #408080; font-style: italic } /* Comment */
+.source .err { border: 1px solid #FF0000 } /* Error */
+.source .k { color: #008000; font-weight: bold } /* Keyword */
+.source .o { color: #666666 } /* Operator */
+.source .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.source .cp { color: #BC7A00 } /* Comment.Preproc */
+.source .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.source .cs { color: #408080; font-style: italic } /* Comment.Special */
+.source .gd { color: #A00000 } /* Generic.Deleted */
+.source .ge { font-style: italic } /* Generic.Emph */
+.source .gr { color: #FF0000 } /* Generic.Error */
+.source .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.source .gi { color: #00A000 } /* Generic.Inserted */
+.source .go { color: #888888 } /* Generic.Output */
+.source .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.source .gs { font-weight: bold } /* Generic.Strong */
+.source .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.source .gt { color: #0044DD } /* Generic.Traceback */
+.source .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.source .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.source .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.source .kp { color: #008000 } /* Keyword.Pseudo */
+.source .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.source .kt { color: #B00040 } /* Keyword.Type */
+.source .m { color: #666666 } /* Literal.Number */
+.source .s { color: #BA2121 } /* Literal.String */
+.source .na { color: #7D9029 } /* Name.Attribute */
+.source .nb { color: #008000 } /* Name.Builtin */
+.source .no { color: #880000 } /* Name.Constant */
+.source .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.source .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.source .nl { color: #A0A000 } /* Name.Label */
+.source .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.source .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.source .nv { color: #19177C } /* Name.Variable */
+.source .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.source .w { color: #bbbbbb } /* Text.Whitespace */
+.source .mb { color: #666666 } /* Literal.Number.Bin */
+.source .mf { color: #666666 } /* Literal.Number.Float */
+.source .mh { color: #666666 } /* Literal.Number.Hex */
+.source .mi { color: #666666 } /* Literal.Number.Integer */
+.source .mo { color: #666666 } /* Literal.Number.Oct */
+.source .sb { color: #BA2121 } /* Literal.String.Backtick */
+.source .sc { color: #BA2121 } /* Literal.String.Char */
+.source .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.source .s2 { color: #BA2121 } /* Literal.String.Double */
+.source .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.source .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.source .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.source .sx { color: #008000 } /* Literal.String.Other */
+.source .sr { color: #BB6688 } /* Literal.String.Regex */
+.source .s1 { color: #BA2121 } /* Literal.String.Single */
+.source .ss { color: #19177C } /* Literal.String.Symbol */
+.source .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.source .vc { color: #19177C } /* Name.Variable.Class */
+.source .vg { color: #19177C } /* Name.Variable.Global */
+.source .vi { color: #19177C } /* Name.Variable.Instance */
+.source .il { color: #666666 } /* Literal.Number.Integer.Long */
+/* delete style */
+/*.source .nd { color: #AA22FF } *//* Name.Decorator */
+/*.source .nf { color: #0000FF } *//* Name.Function */
+/*.source .nc { color: #0000FF; font-weight: bold } *//* Name.Class */
 
-.sidebar ul {
-    position: relative;
-    left: -10px;
-}
+/* rewrite style */
+.source .k { color: #cc7832; font-weight: bold } /* Keyword */
+.source .kn { color: #cc7832; font-weight: bold } /* Keyword.Namespace */
+.source .s { color: #008080 } /* Literal.String */
+.source .nn { color: #333333; font-weight: bold } /* Name.Namespace */
+.source .sd { color: #808080; font-style: italic } /* Literal.String.Doc */
+.source .bp { color: #94558d } /* Name.Builtin.Pseudo */
+.source .nb { color: #8888C6 } /* Name.Builtin */
+.source .c { color: #808080; font-style: italic } /* Comment */
 
-.sidebar ul ul {
-    left: -20px;
-}
-
-.code-comments {
-    color: #808080;
-}
-
-.code-document-comments {
-    color: #629755;
-    font-style: italic;
-}
-
-.code-buildin {
-    color: #8888c6;
-}
-
-.code-parameter {
-    color: #aa4926;
-}
+.linenodiv pre {color: rgb(175, 175, 175); background-color: inherit; border-left: medium none;}
         
     </style>
 </head>
 <body>
     
-    
-    <div class="sidebar">
-        <ul class="list-unstyled">
+    <div id="id-zerg-side-ul" class="zerg-side-ul">
+        <ul class="list-unstyled" style="margin-left: -15px">
             
-            <li><a href=#1>1 Scan</a>
+            <li><a href=#1>
+                    1&nbsp;&nbsp;Scan
+                </a>
                 
             </li>
             
-            <li><a href=#2>2 Installition</a>
+            <li><a href=#2>
+                    2&nbsp;&nbsp;Installition
+                </a>
                 
             </li>
             
-            <li><a href=#3>3 Usage</a>
+            <li><a href=#3>
+                    3&nbsp;&nbsp;Usage
+                </a>
                 
             </li>
             
-            <li><a href=#4>4 Or Use by Source Code</a>
+            <li><a href=#4>
+                    4&nbsp;&nbsp;Or Use by Source Code
+                </a>
                 
             </li>
             
-            <li><a href=#5>5 How to contact me</a>
+            <li><a href=#5>
+                    5&nbsp;&nbsp;How to contact me
+                </a>
                 
             </li>
             
         </ul>
-        <div class="footer">
-            <a href="https://github.com/Mohanson/zerg" target="_blank">GitHub</a>
-            <a href="https://pypi.python.org/pypi/zerg" target="_blank">Pypi</a>
-        </div>
     </div>
     
 
-
-    
-    <div style="width: 80%;" class="content">
-    
-    
-    <h1 id="1">
+    <div id="id-zerg-content" class="zerg-content" style="width: 80%">
+        <h1 id="1">
  Scan
 </h1>
 <p>
@@ -323,22 +377,46 @@ zerg /home/user/README.md --author=Mohanson
 <h1 id="4">
  Or Use by Source Code
 </h1>
-<pre><code>from zerg.mark import DocumentFpath, Handler
+<table class="sourcetable">
+ <tr>
+  <td class="linenos">
+   <div class="linenodiv">
+    <pre>1
+2
+3
+4
+5
+6
+7
+8
+9</pre>
+   </div>
+  </td>
+  <td class="code">
+   <div class="source">
+    <pre><span class="kn">from</span> <span class="nn">zerg.mark</span> <span class="kn">import</span> <span class="n">DocumentFpath</span><span class="p">,</span> <span class="n">Handler</span>
 
-document = DocumentFpath(r'C:\Users\Mohanson\PycharmProjects\zerg\README.md')
-document.execute(Handler.SetAuthor('Mohanson'))
-document.execute(Handler.SetTitle())
-document.execute(Handler.SetDirectory())
-document.execute(Handler.DrawCode())
-print(document.soup)
-document.generate_fpath(r'C:\Users\Mohanson\PycharmProjects\zerg\README.html')
-</code></pre>
-<h1 id="5">
+<span class="n">document</span> <span class="o">=</span> <span class="n">DocumentFpath</span><span class="p">(</span><span class="s">r'C:\Users\Mohanson\PycharmProjects\zerg\README.md'</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">Handler</span><span class="o">.</span><span class="n">SetAuthor</span><span class="p">(</span><span class="s">'Mohanson'</span><span class="p">))</span>
+<span class="n">document</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">Handler</span><span class="o">.</span><span class="n">SetTitle</span><span class="p">())</span>
+<span class="n">document</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">Handler</span><span class="o">.</span><span class="n">SetDirectory</span><span class="p">())</span>
+<span class="n">document</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">Handler</span><span class="o">.</span><span class="n">DrawCode</span><span class="p">())</span>
+<span class="k">print</span><span class="p">(</span><span class="n">document</span><span class="o">.</span><span class="n">soup</span><span class="p">)</span>
+<span class="n">document</span><span class="o">.</span><span class="n">generate_fpath</span><span class="p">(</span><span class="s">r'C:\Users\Mohanson\PycharmProjects\zerg\README.html'</span><span class="p">)</span>
+</pre>
+   </div>
+  </td>
+ </tr>
+</table><h1 id="5">
  How to contact me
 </h1>
 <p>
  mailto: mohanson@outlook.com
 </p>
     </div>
+    <script>
+    console.log('github: https://github.com/Mohanson/zerg');
+    console.log('pypi: https://pypi.python.org/pypi/zerg');
+    </script>
 </body>
 </html>

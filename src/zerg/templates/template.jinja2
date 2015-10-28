@@ -6,51 +6,36 @@
     <style>
         {% include "default.css" %}
         {% include "ext.css" %}
-        {% if document.handler.drawcode %}
+        {% if document.settings.drawcode %}
             {% include "code.css" %}
         {% endif %}
     </style>
 </head>
 <body>
-    {# sidebar with document's hnodes #}
     {% if document.handler.hnodes %}
-    <div class="sidebar">
-        <ul class="list-unstyled">
-            {% for hnode in document.handler.hnodes.children %}
-            <li><a href={{ '#' + hnode.id }}>{{ hnode.id + ' ' + hnode.string }}</a>
+    <div id="id-zerg-side-ul" class="zerg-side-ul">
+        <ul class="list-unstyled" style="margin-left: -15px">
+            {% for hnode in document.handler.hnodes.children recursive%}
+            <li><a href={{ '#' + hnode.id }}>
+                    {% if document.settings.show_directory_number %}{{ hnode.id }}&nbsp;&nbsp;{% endif %}{{ hnode.string }}
+                </a>
                 {% if hnode.children %}
-                <ul class="list-unstyled">
-                    {% for hinfo in hnode.children %}
-                    <li><a href={{ '#' + hnode.id }}>{{ hnode.id + ' ' + hnode.string }}</a>
-                    {% if hinfo.children %}
-                        <ul class="list-unstyled">
-                        {% for hinfo in hinfo.children %}
-                        <li><a href={{ '#' + hnode.id }}>{{ hnode.id + ' ' + hnode.string }}</a></li>
-                        {% endfor %}
-                        </ul>
-                    {% endif %}
-                    </li>
-                    {% endfor %}
+                <ul class="list-unstyled" style="margin-left: -20px">
+                    {{ loop(hnode.children) }}
                 </ul>
                 {% endif %}
             </li>
             {% endfor %}
         </ul>
-        <div class="footer">
-            <a href="https://github.com/Mohanson/zerg" target="_blank">GitHub</a>
-            <a href="https://pypi.python.org/pypi/zerg" target="_blank">Pypi</a>
-        </div>
     </div>
     {% endif %}
 
-
-    {% if document.handler.hnodes %}
-    <div style="width: 80%;" class="content">
-    {% else %}
-    <div style="width: 100%;" class="content">
-    {% endif %}
-    {# document's markdown html #}
-    {{ document.html }}
+    <div id="id-zerg-content" class="zerg-content" style="width: {% if document.handler.hnodes %}80%{% else %}100%{% endif %}">
+        {{ document.html }}
     </div>
+    <script>
+    console.log('github: https://github.com/Mohanson/zerg');
+    console.log('pypi: https://pypi.python.org/pypi/zerg');
+    </script>
 </body>
 </html>

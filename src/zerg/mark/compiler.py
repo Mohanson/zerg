@@ -20,8 +20,12 @@ class Document:
         self.handler = ndict(
             author=str(),
             title=str(),
-            hnodes=None,
-            drawcode=False
+            hnodes=None
+        )
+
+        self.settings = ndict(
+            drawcode=False,
+            show_directory_number=False
         )
 
     @property
@@ -54,13 +58,3 @@ class DocumentFpath:
         document = Document(open(fpath, encoding=encoding).read())
         document.origin.fpath = os.path.abspath(fpath)
         return document
-
-
-if __name__ == '__main__':
-    document = DocumentFpath(r'C:\Users\Mohanson\PycharmProjects\zerg\README.md')
-    document.execute(Handler.SetAuthor('Mohanson'))
-    document.execute(Handler.SetTitle())
-    document.execute(Handler.SetDirectory())
-    print(document.handler.hnodes.html())
-    # document.execute(Handler.DrawCode())
-    document.generate_fpath(r'C:\Users\Mohanson\PycharmProjects\zerg\README.html')

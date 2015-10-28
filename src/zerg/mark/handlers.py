@@ -96,8 +96,9 @@ class _HNode:
 
 
 class HandlerSetDirectory(HandlerImp):
-    def __init__(self, format=True):
+    def __init__(self, format=True, show_directory_number=True):
         self.format = format
+        self.show_directory_number = show_directory_number
 
     def __call__(self, document):
         root = _HNode(None, None)
@@ -112,10 +113,11 @@ class HandlerSetDirectory(HandlerImp):
                 }.get(hnode.deep)
         root.show()
         document.handler.hnodes = root
+        document.settings.show_directory_number = self.show_directory_number
 
 
 class HandlerDrawCode(HandlerImp):
-    def __init__(self, syntax=None, linenos=False):
+    def __init__(self, syntax=None, linenos=True):
         self.sybtax = syntax
         self.linenos = linenos
 
@@ -131,7 +133,7 @@ class HandlerDrawCode(HandlerImp):
                 context_soup = BeautifulSoup(context_drawed, 'html.parser')
                 pre.replace_with(context_soup)
                 logger.info('code block %s colored by %s' % (index, lexer.name))
-        document.handler.drawcode = True
+        document.settings.drawcode = True
 
 
 class Handler:
