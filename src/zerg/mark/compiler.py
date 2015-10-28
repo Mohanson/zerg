@@ -20,7 +20,8 @@ class Document:
         self.handler = ndict(
             author=str(),
             title=str(),
-            hnodes=None
+            hnodes=None,
+            drawcode=False
         )
 
     @property
@@ -60,5 +61,6 @@ if __name__ == '__main__':
     document.execute(Handler.SetAuthor('Mohanson'))
     document.execute(Handler.SetTitle())
     document.execute(Handler.SetDirectory())
-    document.execute(Handler.DrawCode())
+    print(document.handler.hnodes.html())
+    # document.execute(Handler.DrawCode())
     document.generate_fpath(r'C:\Users\Mohanson\PycharmProjects\zerg\README.html')

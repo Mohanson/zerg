@@ -6,7 +6,9 @@
     <style>
         {% include "default.css" %}
         {% include "ext.css" %}
-        {% include "code.css" %}
+        {% if document.handler.drawcode %}
+            {% include "code.css" %}
+        {% endif %}
     </style>
 </head>
 <body>

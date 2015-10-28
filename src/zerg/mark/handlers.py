@@ -76,6 +76,9 @@ class _HNode:
             logger.info('|    ' * (node.deep - 1) + node.id + ' ' + node.string)
             node.show()
 
+    def html(self):
+        pass
+
     def insert(self, hnode):
         if not self.children or hnode.deep >= 2:
             hnode.parent = self
@@ -128,6 +131,7 @@ class HandlerDrawCode(HandlerImp):
                 context_soup = BeautifulSoup(context_drawed, 'html.parser')
                 pre.replace_with(context_soup)
                 logger.info('code block %s colored by %s' % (index, lexer.name))
+        document.handler.drawcode = True
 
 
 class Handler:
