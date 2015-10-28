@@ -1,6 +1,8 @@
 ## Scan
 
 Just another markdown compiler.
+
+只是另一个 markdown 解释器
 ![show.png](/resources/show.png)
 
 ## Installition
