@@ -132,11 +132,10 @@ li {
 }
 
 li a {
-    color: #2C3E50;
+    color: #00F;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    display: block;
 }
 
 li a:hover, li a:focus, li a:active {
