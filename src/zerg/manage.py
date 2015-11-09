@@ -4,7 +4,6 @@ import os
 
 from zerg.mark import DocumentFpath, Handler
 
-
 epilog = """
 Sample:
     zerg /home/user/readme.md --author=Mohanson --title=README
