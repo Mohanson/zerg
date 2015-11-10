@@ -7,7 +7,7 @@ from pygments.lexers import guess_lexer
 from pygments.formatters.html import HtmlFormatter
 from pygments.util import ClassNotFound
 
-from zerg.settings import logger
+from zerg.settings import LOGGER
 
 
 class HandlerImp:
@@ -73,7 +73,7 @@ class _HNode:
 
     def show(self):
         for node in self.children:
-            logger.info('|    ' * (node.deep - 1) + node.id + ' ' + node.string)
+            LOGGER.info('|    ' * (node.deep - 1) + node.id + ' ' + node.string)
             node.show()
 
     def html(self):
@@ -127,12 +127,12 @@ class HandlerDrawCode(HandlerImp):
             try:
                 lexer = guess_lexer(context)
             except ClassNotFound:
-                logger.info('code block %s colored by %s' % (index, 'Normal String'))
+                LOGGER.info('code block %s colored by %s' % (index, 'Normal String'))
             else:
                 context_drawed = highlight(context, lexer, HtmlFormatter(linenos=self.linenos, cssclass='source'))
                 context_soup = BeautifulSoup(context_drawed, 'html.parser')
                 pre.replace_with(context_soup)
-                logger.info('code block %s colored by %s' % (index, lexer.name))
+                LOGGER.info('code block %s colored by %s' % (index, lexer.name))
         document.settings.drawcode = True
 
 

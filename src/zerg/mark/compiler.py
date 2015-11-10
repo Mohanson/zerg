@@ -5,8 +5,7 @@ from markdown import markdown
 from ndict import ndict
 from bs4 import BeautifulSoup
 
-from zerg.mark.handlers import Handler
-from zerg.settings import jinja_env
+from zerg.settings import JINJA_ENV
 
 
 class Document:
@@ -36,7 +35,7 @@ class Document:
         handler(self)
 
     def generate(self):
-        template = jinja_env.get_template('template.jinja2')
+        template = JINJA_ENV.get_template('template.jinja2')
         html = template.render(document=self)
         return html
 
@@ -55,6 +54,7 @@ class DocumentFp:
 
 class DocumentFpath:
     def __new__(cls, fpath, encoding='utf-8'):
-        document = Document(open(fpath, encoding=encoding).read())
+        with open(fpath, encoding=encoding) as fp:
+            document = Document(fp.read())
         document.origin.fpath = os.path.abspath(fpath)
         return document
